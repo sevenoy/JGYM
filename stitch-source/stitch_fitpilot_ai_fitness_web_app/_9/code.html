@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>我的 - FitPilot AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f4fbf8",
+                        "inverse-surface": "#2b3230",
+                        "inverse-primary": "#3cddc7",
+                        "surface-tint": "#006b5f",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00201c",
+                        "surface-container": "#e8efec",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-variant": "#dde4e1",
+                        "on-error-container": "#93000a",
+                        "inverse-on-surface": "#ebf2ef",
+                        "secondary-fixed-dim": "#89ceff",
+                        "outline": "#6b7a76",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e2eae7",
+                        "primary-fixed": "#62fae3",
+                        "outline-variant": "#bacac5",
+                        "on-primary-container": "#00574d",
+                        "on-surface": "#161d1b",
+                        "on-tertiary-container": "#6d4400",
+                        "secondary": "#006591",
+                        "primary-container": "#2dd4bf",
+                        "on-surface-variant": "#3c4a46",
+                        "primary-fixed-dim": "#3cddc7",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#dde4e1",
+                        "primary": "#006b5f",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "tertiary": "#855300",
+                        "on-secondary-fixed": "#001e2f",
+                        "error": "#ba1a1a",
+                        "surface": "#f4fbf8",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "surface-dim": "#d4dcd9",
+                        "secondary-fixed": "#c9e6ff",
+                        "on-primary-fixed-variant": "#005047",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#004666",
+                        "on-background": "#161d1b",
+                        "tertiary-fixed": "#ffddb8",
+                        "secondary-container": "#39b8fd",
+                        "tertiary-container": "#ffad3a",
+                        "surface-container-low": "#eef5f2",
+                        "surface-bright": "#f4fbf8",
+                        "on-tertiary-fixed-variant": "#653e00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-gap": "16px",
+                        "section-gap": "32px",
+                        "container-margin": "20px",
+                        "card-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["20px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "display": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-container-margin py-4 sticky top-0 z-50 bg-surface/70 dark:bg-surface-container/70 backdrop-blur-xl shadow-[0_10px_30px_-15px_rgba(0,107,95,0.04)]">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A close-up portrait of a young woman with a calm, healthy appearance, illuminated by soft, natural light that highlights her features. The aesthetic is clean and modern, fitting seamlessly into a wellness app context. The colors are gentle, with subtle warm skin tones against a bright, airy background, enhancing the light-mode UI style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfsiWGVbtUOLGG2vHsYxAGKwfoZz-JlZW_4673_JMLyEVFqoSP_wB2TOJmsI0rY4MY_Qut2iOCT1P5zL_RTIZGn1jZKcFdSorf_ApXWpIfhZcQBcoJSoNBmkVVfluWXmJHWcwMbOaAy2_8QpzvZEJXQPRdvXGUqe4GlNCT0eBzmMMfQj0icZVY_EO27bRoRHK9qt4lKFW0CC4UnZM5j8IjlFDr9zMMXDxMltbuIOYUYv1zCtapGKqUAg09BehNLmoFMC90d-VATRUc"/>
+</div>
+<h1 class="font-display text-headline-md font-bold text-primary dark:text-primary-fixed-dim">FitPilot AI</h1>
+</div>
+<button class="text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:scale-95 flex items-center justify-center w-10 h-10 rounded-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</header>
+<main class="max-w-3xl mx-auto px-container-margin py-stack-gap space-y-section-gap">
+<!-- User Profile Card -->
+<section class="bg-surface-container-lowest rounded-xl p-card-padding shadow-[0_10px_30px_-15px_rgba(0,107,95,0.04)]">
+<div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+<div class="w-24 h-24 rounded-full overflow-hidden shrink-0 border-4 border-surface-container shadow-sm">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A portrait of a serene individual in a bright, modern setting, exuding a sense of health and wellness. The lighting is soft and flattering, creating a gentle glow that complements a minimal, light-mode user interface. The subject's relaxed posture and clear complexion align with a positive, holistic fitness brand identity, utilizing a soft color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrGzHFSJH7Nqq9xE2NFZY_Wx81DRSItrKPwO-4Crj3CTVEDY1lGjceMnzNnlEJp8e1Tk6fekN_YTTxoGBQWHq4SccPW5e3h9iZFqwc4hNNnAFq95tZXDZO_DxTYMKLNoVOrHEZ9Qw8J_ysWw0g6lKg1jdI6TEFR7B4jgnBSf8ak_ca3EI74t8wF4LYQoKsFQH974SvC39xIOqXSoRVePV1KGfH7WHNofR467PbxPoJrIPamCvpE9Dgef3atHqg3sKIhxZrjnotw7-p"/>
+</div>
+<div class="flex flex-col items-center md:items-start flex-1 text-center md:text-left">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">Jasper</h2>
+<p class="font-body-md text-body-md text-outline mb-4">专注于：力量与灵活性</p>
+<div class="flex flex-wrap justify-center md:justify-start gap-3 w-full">
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-secondary-fixed/30 rounded-full">
+<span class="material-symbols-outlined text-[16px] text-secondary" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+<span class="font-label-md text-label-md text-secondary">数据库已同步</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-primary-container/30 rounded-full">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<span class="font-label-md text-label-md text-primary">AI 已连接</span>
+</div>
+</div>
+</div>
+<button class="shrink-0 p-2 text-outline hover:bg-surface-variant rounded-full transition-colors hidden md:block">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</section>
+<!-- Settings List -->
+<section class="space-y-stack-gap">
+<h3 class="font-label-md text-label-md text-outline px-2">账户与偏好</h3>
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_10px_30px_-15px_rgba(0,107,95,0.04)] overflow-hidden">
+<!-- Action Library -->
+<a class="flex items-center gap-4 p-4 hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">list_alt</span>
+</div>
+<div class="flex-1">
+<div class="font-body-lg text-body-lg text-on-surface">动作库管理</div>
+<div class="font-body-md text-body-md text-outline text-sm">管理练习和姿势</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors">chevron_right</span>
+</a>
+<div class="h-[1px] bg-surface-variant mx-4"></div>
+<!-- YouTube Videos -->
+<a class="flex items-center gap-4 p-4 hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">smart_display</span>
+</div>
+<div class="flex-1">
+<div class="font-body-lg text-body-lg text-on-surface">YouTube 视频管理</div>
+<div class="font-body-md text-body-md text-outline text-sm">保存的例程和灵感</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors">chevron_right</span>
+</a>
+<div class="h-[1px] bg-surface-variant mx-4"></div>
+<!-- AI API -->
+<a class="flex items-center gap-4 p-4 hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">api</span>
+</div>
+<div class="flex-1">
+<div class="font-body-lg text-body-lg text-on-surface">AI API 设置</div>
+<div class="font-body-md text-body-md text-outline text-sm">配置模型参数</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors">chevron_right</span>
+</a>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_10px_30px_-15px_rgba(0,107,95,0.04)] overflow-hidden mt-stack-gap">
+<!-- Privacy -->
+<a class="flex items-center gap-4 p-4 hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div class="flex-1">
+<div class="font-body-lg text-body-lg text-on-surface">隐私与安全</div>
+<div class="font-body-md text-body-md text-outline text-sm">数据保护和权限</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors">chevron_right</span>
+</a>
+<div class="h-[1px] bg-surface-variant mx-4"></div>
+<!-- Data Export -->
+<a class="flex items-center gap-4 p-4 hover:bg-surface-container-low transition-colors group" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">download</span>
+</div>
+<div class="flex-1">
+<div class="font-body-lg text-body-lg text-on-surface">数据导出</div>
+<div class="font-body-md text-body-md text-outline text-sm">下载您的运动历史</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-on-surface transition-colors">chevron_right</span>
+</a>
+</div>
+</section>
+<!-- Logout Button -->
+<div class="pt-4 pb-8 flex justify-center">
+<button class="font-body-md text-body-md text-error px-6 py-3 rounded-full hover:bg-error-container/50 transition-colors">退出登录</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-surface/70 dark:bg-surface-container/70 backdrop-blur-xl rounded-t-xl shadow-[0_-10px_30px_-15px_rgba(0,107,95,0.04)]">
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-secondary transition-colors group w-16" href="#">
+<span class="material-symbols-outlined mb-1 group-active:scale-90 transition-transform duration-200">calendar_today</span>
+<span class="font-label-md text-label-md">今日</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-secondary transition-colors group w-16" href="#">
+<span class="material-symbols-outlined mb-1 group-active:scale-90 transition-transform duration-200">fitness_center</span>
+<span class="font-label-md text-label-md">计划</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-secondary transition-colors group w-16" href="#">
+<span class="material-symbols-outlined mb-1 group-active:scale-90 transition-transform duration-200">history</span>
+<span class="font-label-md text-label-md">记录</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline dark:text-outline-variant hover:text-secondary transition-colors group w-16" href="#">
+<span class="material-symbols-outlined mb-1 group-active:scale-90 transition-transform duration-200">photo_library</span>
+<span class="font-label-md text-label-md">相册</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-secondary after:rounded-full hover:text-secondary transition-colors group w-16" href="#">
+<span class="material-symbols-outlined mb-1 group-active:scale-90 transition-transform duration-200" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-md text-label-md">我的</span>
+</a>
+</nav>
+</body></html>

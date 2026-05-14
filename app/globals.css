@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background: #f4fbf8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #f4fbf8;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(200, 247, 239, 0.55), transparent 36rem),
+    linear-gradient(180deg, #f4fbf8 0%, #eef8f5 100%);
+  color: #111b18;
+  font-family: Inter, "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: rgba(45, 212, 191, 0.35);
+}

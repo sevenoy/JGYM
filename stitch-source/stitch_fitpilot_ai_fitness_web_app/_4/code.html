@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>动作详情 - 杠铃卧推</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "secondary": "#006591",
+                        "surface-variant": "#dde4e1",
+                        "on-tertiary-fixed": "#2a1700",
+                        "surface-container-highest": "#dde4e1",
+                        "secondary-fixed-dim": "#89ceff",
+                        "inverse-primary": "#3cddc7",
+                        "inverse-on-surface": "#ebf2ef",
+                        "on-surface": "#161d1b",
+                        "tertiary-container": "#ffad3a",
+                        "primary-fixed-dim": "#3cddc7",
+                        "surface-dim": "#d4dcd9",
+                        "inverse-surface": "#2b3230",
+                        "on-secondary-fixed": "#001e2f",
+                        "on-tertiary-container": "#6d4400",
+                        "on-surface-variant": "#3c4a46",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#00201c",
+                        "outline": "#6b7a76",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f4fbf8",
+                        "outline-variant": "#bacac5",
+                        "primary": "#006b5f",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#161d1b",
+                        "surface-container-high": "#e2eae7",
+                        "secondary-container": "#39b8fd",
+                        "primary-container": "#2dd4bf",
+                        "background": "#f4fbf8",
+                        "surface-container-low": "#eef5f2",
+                        "on-secondary-container": "#004666",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f4fbf8",
+                        "surface-container": "#e8efec",
+                        "primary-fixed": "#62fae3",
+                        "tertiary": "#855300",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "on-primary-container": "#00574d",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#006b5f",
+                        "secondary-fixed": "#c9e6ff",
+                        "on-primary-fixed-variant": "#005047",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-margin": "20px",
+                        "section-gap": "32px",
+                        "card-padding": "24px",
+                        "stack-gap": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "display": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-lg pb-[100px] antialiased selection:bg-primary/20">
+<!-- Top Navigation (Detail Screen Variant) -->
+<header class="flex justify-between items-center w-full px-container-margin py-4 sticky top-0 z-50 bg-surface/70 backdrop-blur-xl transition-all">
+<button aria-label="返回" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high text-on-surface transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">动作详情</h1>
+<button aria-label="分享" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high text-on-surface transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</header>
+<main>
+<!-- Video Preview Area -->
+<section class="px-container-margin mb-section-gap mt-4">
+<div class="w-full aspect-video bg-surface-container-highest rounded-xl overflow-hidden relative shadow-[0_10px_30px_-15px_rgba(0,107,95,0.08)] group cursor-pointer flex items-center justify-center">
+<img alt="Barbell Bench Press Setup" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-90 transition-transform duration-700 group-hover:scale-105" data-alt="A cinematic, high-quality photograph of a modern, well-lit gym environment focusing on a barbell resting securely on a professional bench press station. The lighting is soft and natural, filtering in through large windows, creating a bright, airy, and motivating 'light mode' aesthetic. The color palette emphasizes clean whites, soft greys, and subtle accents of fresh teal on the equipment branding, perfectly matching a premium wellness-tech vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBiJ9xNllXWy2Gd3PUEQztuwtQI8RmXFnr6pzz8cOztWWohM-qkYWurCW3dMTuZyEbYa9pu1REIltMgx_bCajxP6fp_XPw1I8Q5VKM9F_oliNJcvnUyGQMUcT4UITDZ8XYhthYWSUoFbDFWVZ98de-LfGX5kHdby0WUOhmB32N02g3gPvEn-KciAx75e7V5zc3w-fBTy438bSLnfmeTwqRpPlC3oa1bg_G4nE9--1TvYMbNYKPl40XHGXkQQM_ctafpQI_EDSSUOzV"/>
+<!-- Play Button Overlay -->
+<div class="absolute inset-0 bg-surface-tint/10 group-hover:bg-surface-tint/20 transition-colors duration-300"></div>
+<div class="relative z-10 w-16 h-16 bg-surface/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-[0_8px_20px_-8px_rgba(0,107,95,0.3)] group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary text-[32px] ml-1" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+<!-- YouTube Duration Pill Placeholder -->
+<div class="absolute bottom-3 right-3 bg-inverse-surface/80 backdrop-blur-sm px-2 py-1 rounded text-inverse-on-surface font-label-md text-label-md">
+                    01:45
+                </div>
+</div>
+</section>
+<!-- Header Info -->
+<section class="px-container-margin mb-section-gap flex flex-col gap-4">
+<h2 class="font-display text-display text-on-surface">杠铃卧推</h2>
+<div class="flex flex-wrap gap-2">
+<span class="px-4 py-1.5 bg-primary/10 text-primary rounded-full font-label-md text-label-md border border-primary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">fitness_center</span>
+                    胸部
+                </span>
+<span class="px-4 py-1.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md">
+                    胸大肌
+                </span>
+<span class="px-4 py-1.5 bg-surface-container-high text-on-surface-variant rounded-full font-label-md text-label-md">
+                    三头肌
+                </span>
+</div>
+</section>
+<!-- Training Parameters Bento Grid -->
+<section class="px-container-margin mb-section-gap">
+<div class="grid grid-cols-3 gap-3">
+<div class="bg-surface-container-lowest border border-surface-container p-4 rounded-xl flex flex-col items-center justify-center gap-2 shadow-[0_8px_24px_-12px_rgba(0,107,95,0.03)] hover:border-primary/30 transition-colors">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-on-surface">4</span>
+<span class="font-label-md text-label-md text-outline">推荐组数</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-surface-container p-4 rounded-xl flex flex-col items-center justify-center gap-2 shadow-[0_8px_24px_-12px_rgba(0,107,95,0.03)] hover:border-primary/30 transition-colors">
+<div class="w-8 h-8 rounded-full bg-secondary-container/30 flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[20px]">repeat</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-on-surface">8-12</span>
+<span class="font-label-md text-label-md text-outline">次 / 组</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-surface-container p-4 rounded-xl flex flex-col items-center justify-center gap-2 shadow-[0_8px_24px_-12px_rgba(0,107,95,0.03)] hover:border-primary/30 transition-colors">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed/40 flex items-center justify-center text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-on-surface">90s</span>
+<span class="font-label-md text-label-md text-outline">休息时间</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Instructions -->
+<section class="px-container-margin mb-section-gap">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-stack-gap flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                动作说明
+            </h3>
+<div class="bg-surface-container-lowest border border-surface-container rounded-xl p-card-padding shadow-[0_10px_30px_-15px_rgba(0,107,95,0.02)]">
+<ol class="list-decimal list-outside ml-4 space-y-4 font-body-lg text-body-lg text-on-surface-variant marker:text-primary marker:font-bold">
+<li class="pl-2">平躺在平凳上，双脚平放于地面，保持身体稳定，收紧核心。</li>
+<li class="pl-2">双手以略宽于肩的距离正握杠铃，将杠铃从架上推起，手臂伸直置于胸部上方。</li>
+<li class="pl-2">吸气，缓慢控制地将杠铃下放至胸部中段，感受胸肌的拉伸。</li>
+<li class="pl-2">呼气，胸大肌发力将杠铃快速向上推起，恢复至起始位置，顶峰收缩。</li>
+</ol>
+</div>
+</section>
+<!-- Precautions Warning Card -->
+<section class="px-container-margin mb-section-gap">
+<div class="bg-[#FFF8ED] border border-tertiary-container/30 rounded-xl p-card-padding flex gap-4 shadow-sm relative overflow-hidden">
+<!-- Subtle background decoration -->
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-tertiary-container/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="shrink-0 pt-0.5">
+<span class="material-symbols-outlined text-tertiary-container text-[28px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-tertiary-container mb-2">注意事项</h4>
+<ul class="list-disc list-outside ml-4 space-y-1.5 font-body-md text-body-md text-on-tertiary-fixed-variant marker:text-tertiary-container/50">
+<li class="pl-1">下放杠铃时务必控制速度，避免在胸部发生弹振借力。</li>
+<li class="pl-1">保持手腕中立直立，切勿过度向后弯折以免造成关节损伤。</li>
+<li class="pl-1">大重量训练时，强烈建议有保护者在场协助。</li>
+</ul>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Action Bar (Contextual FAB Replacement for Details Page) -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-2xl border-t border-surface-container-high/50 px-container-margin py-4 pb-[calc(1rem+env(safe-area-inset-bottom))] flex gap-3 shadow-[0_-10px_40px_-10px_rgba(0,107,95,0.08)]">
+<!-- Secondary Button: Favorite -->
+<button aria-label="收藏动作" class="w-[56px] h-[56px] rounded-xl bg-surface-container-lowest border border-surface-container-high flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/30 hover:bg-primary/5 transition-all duration-200 shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[24px]">bookmark_border</span>
+</button>
+<!-- Primary Button: Add to Workout -->
+<button class="flex-1 h-[56px] bg-primary text-on-primary rounded-xl font-headline-md text-headline-md flex items-center justify-center gap-2 shadow-[0_8px_20px_-8px_rgba(0,107,95,0.5)] hover:bg-surface-tint hover:-translate-y-0.5 transition-all duration-200 active:translate-y-0">
+<span class="material-symbols-outlined text-[20px]">add</span>
+            加入今日训练
+        </button>
+</div>
+</body></html>
