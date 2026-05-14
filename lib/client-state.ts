@@ -7,9 +7,13 @@ import {
 } from "@/lib/fitness-data";
 import {
   parsePersonalPlanSettings,
+  parsePersonalTrainingLogs,
   PERSONAL_PLAN_SETTINGS_EVENT,
   PERSONAL_PLAN_SETTINGS_STORAGE_KEY,
+  PERSONAL_TRAINING_LOGS_EVENT,
+  PERSONAL_TRAINING_LOGS_STORAGE_KEY,
   type PersonalPlanSettings,
+  type PersonalTrainingLog,
 } from "@/lib/personal-plan";
 import type { PhotoEntry } from "@/lib/types";
 
@@ -72,6 +76,28 @@ export function usePersonalPlanSettings() {
   return [settings, setSettings] as const;
 }
 
+export function usePersonalTrainingLogs() {
+  const logsSnapshot = useSyncExternalStore(
+    subscribePersonalTrainingLogs,
+    getPersonalTrainingLogsSnapshot,
+    getPersonalTrainingLogsServerSnapshot,
+  );
+  const logs = useMemo(
+    () => parsePersonalTrainingLogs(logsSnapshot),
+    [logsSnapshot],
+  );
+
+  const setLogs = useCallback((nextLogs: PersonalTrainingLog[]) => {
+    window.localStorage.setItem(
+      PERSONAL_TRAINING_LOGS_STORAGE_KEY,
+      JSON.stringify(nextLogs),
+    );
+    window.dispatchEvent(new Event(PERSONAL_TRAINING_LOGS_EVENT));
+  }, []);
+
+  return [logs, setLogs] as const;
+}
+
 function parseUploadedPhotos(snapshot: string): PhotoEntry[] {
   try {
     return JSON.parse(snapshot) as PhotoEntry[];
@@ -129,4 +155,21 @@ function getPersonalPlanSettingsSnapshot() {
 
 function getPersonalPlanSettingsServerSnapshot() {
   return "";
+}
+
+function subscribePersonalTrainingLogs(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener(PERSONAL_TRAINING_LOGS_EVENT, callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(PERSONAL_TRAINING_LOGS_EVENT, callback);
+  };
+}
+
+function getPersonalTrainingLogsSnapshot() {
+  return window.localStorage.getItem(PERSONAL_TRAINING_LOGS_STORAGE_KEY) || "[]";
+}
+
+function getPersonalTrainingLogsServerSnapshot() {
+  return "[]";
 }

@@ -54,6 +54,8 @@ export type HistoryEntry = {
   duration: string;
   tags: string[];
   score: number;
+  planDay?: number;
+  summary?: string;
   photoImage?: string;
   photoCount?: number;
 };

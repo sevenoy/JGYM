@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState, useSyncExternalStore } from "react";
 import {
   ArrowRight,
@@ -21,8 +22,15 @@ import { planDays } from "@/lib/mock-data";
 import {
   formatDateLabel,
   SELECTED_PLAN_STORAGE_KEY,
+  toIsoDate,
   type GeneratedPlanOption,
+  type GeneratedPlanDay,
 } from "@/lib/plan-generator";
+import {
+  buildStrictPersonalPlanOption,
+  clampPlanDay,
+  PERSONAL_PLAN_STRICT_STORAGE_KEY,
+} from "@/lib/personal-plan";
 import { cn } from "@/lib/utils";
 
 function readSelectedPlanRaw() {
@@ -31,7 +39,8 @@ function readSelectedPlanRaw() {
 }
 
 export default function SelectedPlanDetail() {
-  const [planSettings] = usePersonalPlanSettings();
+  const router = useRouter();
+  const [planSettings, setPlanSettings] = usePersonalPlanSettings();
   const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
   const rawPlan = useSyncExternalStore(
     (callback) => {
@@ -100,6 +109,27 @@ export default function SelectedPlanDetail() {
     plan.id === "strict-personal-16-week"
       ? planSettings.currentPlanDay
       : firstPlanDay;
+
+  function openPlanDay(day: GeneratedPlanDay) {
+    const selectedDay = clampPlanDay(day.day);
+    const today = toIsoDate(new Date());
+    const nextSettings = {
+      startDate: today,
+      startPlanDay: selectedDay,
+      currentPlanDay: selectedDay,
+      updatedAt: new Date().toISOString(),
+    };
+    const strictPlan = buildStrictPersonalPlanOption({
+      startDate: nextSettings.startDate,
+      startPlanDay: nextSettings.startPlanDay,
+    });
+
+    setPlanSettings(nextSettings);
+    window.localStorage.setItem(PERSONAL_PLAN_STRICT_STORAGE_KEY, "true");
+    window.localStorage.setItem(SELECTED_PLAN_STORAGE_KEY, JSON.stringify(strictPlan));
+    window.dispatchEvent(new Event("fitpilot-plan-selected"));
+    router.push(`/plan/day/${selectedDay}`);
+  }
 
   return (
     <div className="mt-8 space-y-6">
@@ -199,15 +229,20 @@ export default function SelectedPlanDetail() {
 
         <div className="mt-4 space-y-3">
           {visibleDays.map((day) => (
-            <SectionCard
+            <button
               key={`${day.day}-${day.date}`}
-              as="article"
-              className={cn(
-                "p-4",
+              type="button"
+              onClick={() => openPlanDay(day)}
+              className="block w-full text-left"
+            >
+              <SectionCard
+                as="article"
+                className={cn(
+                "p-4 transition active:scale-[0.99]",
                 day.day === highlightedDay &&
                   "border-primary/35 bg-primary-soft/35",
-              )}
-            >
+                )}
+              >
               <div className="flex gap-3">
                 <span
                   className={cn(
@@ -245,9 +280,18 @@ export default function SelectedPlanDetail() {
                   <p className="mt-3 rounded-2xl bg-surface-soft px-3 py-2 text-xs font-bold text-muted">
                     {day.note}
                   </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <span className="rounded-full bg-primary px-3 py-1.5 text-xs font-bold text-white">
+                      设为当前执行日
+                    </span>
+                    <span className="rounded-full bg-white px-3 py-1.5 text-xs font-bold text-primary">
+                      查看完整执行内容
+                    </span>
+                  </div>
                 </div>
               </div>
-            </SectionCard>
+              </SectionCard>
+            </button>
           ))}
         </div>
       </section>

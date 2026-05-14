@@ -7,6 +7,8 @@ import {
 export const PERSONAL_PLAN_STRICT_STORAGE_KEY = "fitpilot-personal-plan-strict";
 export const PERSONAL_PLAN_SETTINGS_STORAGE_KEY = "fitpilot-personal-plan-settings";
 export const PERSONAL_PLAN_SETTINGS_EVENT = "fitpilot-personal-plan-settings-updated";
+export const PERSONAL_TRAINING_LOGS_STORAGE_KEY = "fitpilot-personal-training-logs";
+export const PERSONAL_TRAINING_LOGS_EVENT = "fitpilot-personal-training-logs-updated";
 
 export type PersonalPlanSettings = {
   startDate: string;
@@ -34,6 +36,20 @@ export type PersonalPlanDay = {
   warmup: string[];
   exercises: PersonalPlanExercise[];
   recovery: string[];
+};
+
+export type PersonalTrainingLog = {
+  id: string;
+  planDay: number;
+  title: string;
+  date: string;
+  duration: string;
+  score: number;
+  fatigue: number;
+  pump: number;
+  status: "差" | "一般" | "好";
+  summary: string;
+  createdAt: string;
 };
 
 export const personalPlan = {
@@ -289,6 +305,58 @@ export function parsePersonalPlanSettings(raw: string): PersonalPlanSettings {
   } catch {
     return getDefaultPersonalPlanSettings();
   }
+}
+
+export function parsePersonalTrainingLogs(raw: string): PersonalTrainingLog[] {
+  if (!raw) return [];
+
+  try {
+    const parsed = JSON.parse(raw) as Partial<PersonalTrainingLog>[];
+    if (!Array.isArray(parsed)) return [];
+
+    return parsed
+      .filter((item) => Number.isFinite(Number(item.planDay)))
+      .map((item) => {
+        const planDay = clampPlanDay(Number(item.planDay));
+        const schedule = getPersonalPlanForExecutionDay(planDay);
+        const status: PersonalTrainingLog["status"] =
+          item.status === "差" || item.status === "一般" ? item.status : "好";
+
+        return {
+          id: item.id || `log-${planDay}-${item.date || toIsoDate(new Date())}`,
+          planDay,
+          title: item.title || schedule.title,
+          date: item.date || toIsoDate(new Date()),
+          duration: item.duration || schedule.duration,
+          score: clampScore(Number(item.score ?? 8.5)),
+          fatigue: clampRating(Number(item.fatigue ?? 7)),
+          pump: clampRating(Number(item.pump ?? 8)),
+          status,
+          summary: item.summary || "已完成训练，动作质量稳定。",
+          createdAt: item.createdAt || new Date().toISOString(),
+        };
+      })
+      .sort((a, b) => {
+        const dateSort = b.date.localeCompare(a.date);
+        return dateSort !== 0 ? dateSort : b.planDay - a.planDay;
+      });
+  } catch {
+    return [];
+  }
+}
+
+export function getPlanDateForDay(settings: PersonalPlanSettings, planDay: number) {
+  return addDays(settings.startDate, clampPlanDay(planDay) - settings.startPlanDay);
+}
+
+function clampRating(value: number) {
+  if (!Number.isFinite(value)) return 7;
+  return Math.max(1, Math.min(10, Math.round(value)));
+}
+
+function clampScore(value: number) {
+  if (!Number.isFinite(value)) return 8.5;
+  return Math.max(1, Math.min(10, Math.round(value * 10) / 10));
 }
 
 export function getPersonalPlanForExecutionDay(planDay: number) {

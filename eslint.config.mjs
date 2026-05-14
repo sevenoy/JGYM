@@ -13,6 +13,8 @@ const eslintConfig = defineConfig([
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   globalIgnores([
     ".next/**",
+    ".open-next/**",
+    ".wrangler/**",
     "node_modules/**",
     "stitch-source/**",
     "next-env.d.ts",
