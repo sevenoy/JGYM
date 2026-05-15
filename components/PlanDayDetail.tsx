@@ -16,6 +16,7 @@ import {
   Utensils,
 } from "lucide-react";
 import SectionCard from "@/components/SectionCard";
+import TrainingSummary, { extractActualDuration } from "@/components/TrainingSummary";
 import {
   usePersonalPlanSettings,
   usePersonalTrainingLogs,
@@ -47,9 +48,19 @@ export default function PlanDayDetail({ planDay }: PlanDayDetailProps) {
   const [logs, setLogs] = usePersonalTrainingLogs();
   const [feedback, setFeedback] = useState("");
   const matchedLogs = useMemo(
-    () => logs.filter((log) => log.planDay === normalizedDay),
+    () =>
+      logs
+        .filter((log) => log.planDay === normalizedDay)
+        .sort(
+          (first, second) =>
+            Date.parse(second.createdAt) - Date.parse(first.createdAt),
+        ),
     [logs, normalizedDay],
   );
+  const latestLog = matchedLogs[0];
+  const actualDuration = latestLog
+    ? extractActualDuration(latestLog.summary, latestLog.duration)
+    : "";
   const plannedDate = getPlanDateForDay(settings, normalizedDay);
 
   function setAsCurrentExecutionDay() {
@@ -73,9 +84,8 @@ export default function PlanDayDetail({ planDay }: PlanDayDetailProps) {
   }
 
   function quickComplete() {
-    const exists = logs.some((log) => log.planDay === normalizedDay);
-    if (exists) {
-      setFeedback(`第 ${normalizedDay} 天已经有训练总结，可以在记录页继续编辑。`);
+    if (latestLog) {
+      setFeedback(`第 ${normalizedDay} 天已按补录内容标记完成。`);
       return;
     }
 
@@ -84,15 +94,12 @@ export default function PlanDayDetail({ planDay }: PlanDayDetailProps) {
       planDay: normalizedDay,
       title: schedule.title,
       date: toIsoDate(new Date()),
-      duration: schedule.duration,
+      duration: "",
       score: schedule.type === "strength" ? 8.6 : 8.2,
       fatigue: schedule.type === "strength" ? 7 : 4,
       pump: schedule.type === "strength" ? 8 : 4,
       status: "好",
-      summary:
-        schedule.type === "strength"
-          ? "已按计划完成，动作质量稳定，后续按原计划推进。"
-          : "已完成恢复内容，保留恢复能力，不额外增加力量训练。",
+      summary: `已手动标记第 ${normalizedDay} 天完成，尚未补录详细训练内容。`,
       createdAt: new Date().toISOString(),
     };
 
@@ -111,7 +118,11 @@ export default function PlanDayDetail({ planDay }: PlanDayDetailProps) {
       <SectionCard className="bg-gradient-to-br from-white to-primary-soft/60">
         <div className="grid grid-cols-2 gap-3">
           <Metric icon={CalendarCheck} label="计划日期" value={formatDateLabel(plannedDate)} />
-          <Metric icon={Clock3} label="训练时长" value={schedule.duration} />
+          <Metric
+            icon={Clock3}
+            label={latestLog ? "实际时长" : "训练时长"}
+            value={latestLog ? actualDuration || "未记录" : schedule.duration}
+          />
           <Metric icon={ShieldCheck} label="强度" value={schedule.intensity} />
           <Metric icon={Flame} label="今日热量" value={`${nutrition.calories} kcal`} />
         </div>
@@ -143,63 +154,81 @@ export default function PlanDayDetail({ planDay }: PlanDayDetailProps) {
         <SectionCard className="border-primary/20 bg-primary-soft/30">
           <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
             <NotebookPen className="text-primary" size={22} />
-            已有训练总结
+            实际执行记录
           </h2>
+          <p className="mt-3 text-sm leading-6 text-muted">
+            这里仅展示你补录或完成时记录的真实内容；原计划不会被当成已完成动作。
+          </p>
           <div className="mt-4 space-y-3">
             {matchedLogs.map((log) => (
               <div key={log.id} className="rounded-3xl bg-white/85 p-4">
                 <p className="text-sm font-bold text-primary">
                   {formatDateLabel(log.date)} · AI {log.score}/10
                 </p>
-                <p className="mt-2 leading-6 text-muted">{log.summary}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <span className="rounded-lg bg-surface-muted px-2 py-1 text-xs font-bold text-muted">
+                    {log.status}
+                  </span>
+                  <span className="rounded-lg bg-surface-muted px-2 py-1 text-xs font-bold text-muted">
+                    疲劳 {log.fatigue}/10
+                  </span>
+                  <span className="rounded-lg bg-surface-muted px-2 py-1 text-xs font-bold text-muted">
+                    泵感 {log.pump}/10
+                  </span>
+                </div>
+                <TrainingSummary summary={log.summary} title="补录内容" />
               </div>
             ))}
           </div>
         </SectionCard>
       ) : null}
 
-      <SectionCard>
-        <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
-          <HeartPulse className="text-primary" size={22} />
-          热身与激活
-        </h2>
-        <List items={schedule.warmup} />
-      </SectionCard>
+      {matchedLogs.length === 0 ? (
+        <>
+          <SectionCard>
+            <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
+              <HeartPulse className="text-primary" size={22} />
+              热身与激活
+            </h2>
+            <List items={schedule.warmup} />
+          </SectionCard>
 
-      <SectionCard>
-        <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
-          <Dumbbell className="text-primary" size={22} />
-          正式执行内容
-        </h2>
-        <div className="mt-4 space-y-3">
-          {schedule.exercises.map((exercise, index) => (
-            <article key={exercise.name} className="rounded-3xl bg-surface-soft p-4">
-              <div className="flex items-start gap-3">
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-white font-display font-bold text-primary">
-                  {index + 1}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-display text-xl font-bold">{exercise.name}</h3>
-                  <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs font-bold">
-                    <span className="rounded-2xl bg-white px-2 py-2">{exercise.sets}</span>
-                    <span className="rounded-2xl bg-white px-2 py-2">{exercise.reps}</span>
-                    <span className="rounded-2xl bg-white px-2 py-2">{exercise.rest}</span>
+          <SectionCard>
+            <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
+              <Dumbbell className="text-primary" size={22} />
+              正式执行内容
+            </h2>
+            <div className="mt-4 space-y-3">
+              {schedule.exercises.map((exercise, index) => (
+                <article key={exercise.name} className="rounded-3xl bg-surface-soft p-4">
+                  <div className="flex items-start gap-3">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-white font-display font-bold text-primary">
+                      {index + 1}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-display text-xl font-bold">{exercise.name}</h3>
+                      <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs font-bold">
+                        <span className="rounded-2xl bg-white px-2 py-2">{exercise.sets}</span>
+                        <span className="rounded-2xl bg-white px-2 py-2">{exercise.reps}</span>
+                        <span className="rounded-2xl bg-white px-2 py-2">{exercise.rest}</span>
+                      </div>
+                      <p className="mt-3 text-sm leading-6 text-muted">{exercise.note}</p>
+                    </div>
                   </div>
-                  <p className="mt-3 text-sm leading-6 text-muted">{exercise.note}</p>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </SectionCard>
+                </article>
+              ))}
+            </div>
+          </SectionCard>
 
-      <SectionCard>
-        <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
-          <RotateCcw className="text-primary" size={22} />
-          结束恢复
-        </h2>
-        <List items={schedule.recovery} />
-      </SectionCard>
+          <SectionCard>
+            <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
+              <RotateCcw className="text-primary" size={22} />
+              结束恢复
+            </h2>
+            <List items={schedule.recovery} />
+          </SectionCard>
+        </>
+      ) : null}
 
       <SectionCard className="bg-gradient-to-br from-white to-secondary-soft/70">
         <h2 className="flex items-center gap-2 font-display text-2xl font-bold">
@@ -215,10 +244,10 @@ export default function PlanDayDetail({ planDay }: PlanDayDetailProps) {
         <button
           type="button"
           onClick={quickComplete}
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-surface-high px-5 py-4 font-bold text-ink"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-4 font-bold text-white shadow-soft"
         >
           <NotebookPen size={18} />
-          快速标记这天已完成
+          {latestLog ? "确认这天已完成" : "快速标记这天已完成"}
         </button>
       </SectionCard>
     </div>
